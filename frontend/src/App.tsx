@@ -262,13 +262,13 @@ function App() {
 
   const fetchData = useCallback(async () => {
     try {
-      const deviceRes = await fetch('http://localhost:8000/api/devices');
+      const deviceRes = await fetch(`${import.meta.env.VITE_API_URL}/api/devices`);
       if (deviceRes.ok) {
         setDevices(await deviceRes.json());
         setIsConnected(true);
       }
       
-      const statsRes = await fetch('http://localhost:8000/api/stats');
+      const statsRes = await fetch(`${import.meta.env.VITE_API_URL}/api/stats`);
       if (statsRes.ok) {
         const stats = await statsRes.json();
         setDemoStatus(stats.demo || { isRunning: false, currentPhase: 'IDLE' });
@@ -285,17 +285,17 @@ function App() {
   }, [fetchData]);
 
   const triggerAttack = async () => {
-    await fetch('http://localhost:8000/api/attack/simulate', { method: 'POST' });
+    await fetch(`${import.meta.env.VITE_API_URL}/api/attack/simulate`, { method: 'POST' });
     fetchData();
   };
 
   const resetSystem = async () => {
-    await fetch('http://localhost:8000/api/attack/reset', { method: 'POST' });
+    await fetch(`${import.meta.env.VITE_API_URL}/api/attack/reset`, { method: 'POST' });
     fetchData();
   };
 
   const startDemo = async () => {
-    await fetch('http://localhost:8000/api/demo/start', { method: 'POST' });
+    await fetch(`${import.meta.env.VITE_API_URL}/api/demo/start`, { method: 'POST' });
     fetchData();
   };
 
